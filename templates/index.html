@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Crypto Analyzer - Αρχική{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title mb-4">Crypto Analyzer</h1>
+                <h4 class="text-muted mb-4">Αλγοριθμική Ανάλυση Κρυπτονομισμάτων</h4>
+                
+                <div class="alert alert-info">
+                    <strong>Τελευταία ενημέρωση δεδομένων:</strong> {{ last_update }}
+                </div>
+                
+                <p class="lead">
+                    Καλώς ήρθατε στο Crypto Analyzer! Αυτή η εφαρμογή παρέχει αλγοριθμική ανάλυση 
+                    κρυπτονομισμάτων χρησιμοποιώντας μαθηματικούς δείκτες και τεχνική ανάλυση.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Ενημέρωση Δεδομένων</h5>
+                                <p class="card-text">Λήψη των τελευταίων τιμών για τα κορυφαία κρυπτονομίσματα.</p>
+                                <a href="/update_data" class="btn btn-primary">Ενημέρωση</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Νέα Ανάλυση</h5>
+                                <p class="card-text">Δημιουργία αναλυτικής αναφοράς για κάποιο κρυπτονόμισμα.</p>
+                                <a href="/analyze" class="btn btn-success">Ανάλυση</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Αποθηκευμένες Αναφορές</h5>
+                                <p class="card-text">Προβολή ήδη αποθηκευμένων αναλύσεων.</p>
+                                <a href="/reports" class="btn btn-info">Αναφορές</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-5">
+                    <h3>Διαθέσιμοι Τεχνικοί Δείκτες</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">SMA (Simple Moving Average) - Απλός Κινητός Μέσος Όρος</li>
+                        <li class="list-group-item">EMA (Exponential Moving Average) - Εκθετικός Κινητός Μέσος Όρος</li>
+                        <li class="list-group-item">RSI (Relative Strength Index) - Δείκτης Σχετικής Ισχύος</li>
+                        <li class="list-group-item">MACD (Moving Average Convergence Divergence)</li>
+                        <li class="list-group-item">Bollinger Bands - Ζώνες Bollinger</li>
+                        <li class="list-group-item">Ανάλυση τάσης και μεταβλητότητας</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

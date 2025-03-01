@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Διαθέσιμα Κρυπτονομίσματα{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Διαθέσιμα Κρυπτονομίσματα</h2>
+                
+                {% if coins %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Όνομα</th>
+                                <th>Σύμβολο</th>
+                                <th>Ενέργειες</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for name, symbol in coins %}
+                            <tr>
+                                <td>{{ name.capitalize() }}</td>
+                                <td>{{ symbol.upper() }}</td>
+                                <td>
+                                    <form method="post" action="/analyze" class="d-inline">
+                                        <input type="hidden" name="crypto" value="{{ name }}">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Ανάλυση</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="alert alert-warning">
+                    Δεν υπάρχουν διαθέσιμα δεδομένα για κρυπτονομίσματα. 
+                    <a href="/update_data" class="alert-link">Κάντε ενημέρωση δεδομένων</a> πρώτα.
+                </div>
+                {% endif %}
+                
+                <div class="mt-3">
+                    <a href="/update_data" class="btn btn-primary">Ενημέρωση Δεδομένων</a>
+                    <a href="/analyze" class="btn btn-success">Νέα Ανάλυση</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

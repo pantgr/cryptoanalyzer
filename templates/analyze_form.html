@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Νέα Ανάλυση{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Νέα Ανάλυση Κρυπτονομίσματος</h2>
+                
+                {% if coins %}
+                <form method="post" action="/analyze">
+                    <div class="mb-3">
+                        <label for="crypto" class="form-label">Επιλέξτε κρυπτονόμισμα:</label>
+                        <select name="crypto" id="crypto" class="form-select" required>
+                            {% for name, symbol in coins %}
+                            <option value="{{ name }}">{{ name.capitalize() }} ({{ symbol.upper() }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-success">Ανάλυση</button>
+                </form>
+                {% else %}
+                <div class="alert alert-warning">
+                    Δεν υπάρχουν διαθέσιμα δεδομένα για κρυπτονομίσματα. 
+                    <a href="/update_data" class="alert-link">Κάντε ενημέρωση δεδομένων</a> πρώτα.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+/* Γενικές προσαρμογές για το Crypto Analyzer */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Header και navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.card-title {
+    color: #212529;
+    font-weight: 600;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.3rem;
+    padding: 0.5rem 1rem;
+}
+
+/* Progress bar */
+.progress {
+    height: 1.2rem;
+    border-radius: 0.3rem;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 0.3rem;
+}
+
+/* Tables */
+.table th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+}
+
+/* Footer */
+footer {
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+/* Chart containers */
+.chart-container {
+    width: 100%;
+    margin: 20px auto;
+}
+
+/* Analysis info */
+.analysis-metrics {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.value-up {
+    color: #28a745;
+}
+
+.value-down {
+    color: #dc3545;
+}

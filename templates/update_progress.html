@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Ενημέρωση Δεδομένων{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title mb-4">Ενημέρωση Δεδομένων</h2>
+                
+                <div class="progress mb-3">
+                    <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                         role="progressbar" style="width: 0%"></div>
+                </div>
+                
+                <div id="status-message" class="alert alert-info">
+                    Ξεκίνησε η ενημέρωση δεδομένων...
+                </div>
+                
+                <div id="completion-actions" style="display: none;">
+                    <a href="/" class="btn btn-primary">Επιστροφή στην Αρχική</a>
+                    <a href="/coins" class="btn btn-success">Προβολή Κρυπτονομισμάτων</a>
+                    <a href="/analyze" class="btn btn-info">Νέα Ανάλυση</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Έλεγχος προόδου ενημέρωσης
+    function checkUpdateStatus() {
+        fetch('/api/update_status')
+            .then(response => response.json())
+            .then(data => {
+                // Ενημέρωση μπάρας προόδου
+                document.getElementById('progress-bar').style.width = data.progress + '%';
+                
+                // Ενημέρωση μηνύματος κατάστασης
+                document.getElementById('status-message').textContent = data.message;
+                
+                // Αλλαγή χρώματος μπάρας προόδου αν ολοκληρώθηκε ή απέτυχε
+                if (data.progress === 100) {
+                    document.getElementById('progress-bar').classList.remove('progress-bar-animated');
+                    document.getElementById('progress-bar').classList.remove('progress-bar-striped');
+                    document.getElementById('progress-bar').classList.add('bg-success');
+                    document.getElementById('status-message').classList.remove('alert-info');
+                    document.getElementById('status-message').classList.add('alert-success');
+                    document.getElementById('completion-actions').style.display = 'block';
+                    return; // Σταματάμε τον έλεγχο
+                } else if (data.progress === 0 && !data.running) {
+                    document.getElementById('progress-bar').classList.remove('progress-bar-animated');
+                    document.getElementById('progress-bar').classList.remove('progress-bar-striped');
+                    document.getElementById('progress-bar').classList.add('bg-danger');
+                    document.getElementById('status-message').classList.remove('alert-info');
+                    document.getElementById('status-message').classList.add('alert-danger');
+                    document.getElementById('completion-actions').style.display = 'block';
+                    return; // Σταματάμε τον έλεγχο
+                }
+                
+                // Συνεχίζουμε τον έλεγχο αν η διαδικασία εξακολουθεί να τρέχει
+                if (data.running) {
+                    setTimeout(checkUpdateStatus, 1000);
+                }
+            })
+            .catch(error => {
+                console.error('Σφάλμα κατά τον έλεγχο κατάστασης:', error);
+                document.getElementById('status-message').textContent = 'Σφάλμα επικοινωνίας με τον server.';
+                document.getElementById('status-message').classList.remove('alert-info');
+                document.getElementById('status-message').classList.add('alert-danger');
+            });
+    }
+    
+    // Ξεκινάμε τον έλεγχο μόλις φορτωθεί η σελίδα
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(checkUpdateStatus, 500);
+    });
+</script>
+{% endblock %}
