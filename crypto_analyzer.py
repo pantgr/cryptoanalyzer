@@ -188,13 +188,15 @@ class CryptoAnalyzer:
         plt.tight_layout()
         
         # Αποθήκευση γραφήματος
-        chart_filename = f"{coin_id}_price_chart.png"
-        chart_path = os.path.join(self.charts_dir, chart_filename)
-        plt.savefig(chart_path)
-        plt.show()
+        import io
+        import base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        img_str = base64.b64encode(buf.read()).decode('utf-8')
         plt.close()
-        
-        return chart_filename
+    
+        return f"data:image/png;base64,{img_str}"
         
     def generate_indicators_chart(self, coin_id, prices, dates, indicators):
         """Δημιουργεί γράφημα με δείκτες τεχνικής ανάλυσης."""
@@ -216,13 +218,14 @@ class CryptoAnalyzer:
             plt.tight_layout()
             
             # Αποθήκευση γραφήματος RSI
-            rsi_chart_filename = f"{coin_id}_rsi_chart.png"
-            rsi_chart_path = os.path.join(self.charts_dir, rsi_chart_filename)
-            plt.savefig(rsi_chart_path)
-            plt.show()
+            import io
+            import base64
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png')
+            buf.seek(0)
+            img_str = base64.b64encode(buf.read()).decode('utf-8')
             plt.close()
-            
-            return rsi_chart_filename
+            return f"data:image/png;base64,{img_str}"
         
         return None
         
@@ -251,13 +254,15 @@ class CryptoAnalyzer:
         plt.tight_layout()
         
         # Αποθήκευση γραφήματος
-        bb_chart_filename = f"{coin_id}_bollinger_chart.png"
-        bb_chart_path = os.path.join(self.charts_dir, bb_chart_filename)
-        plt.savefig(bb_chart_path)
-        plt.show()
+        import io
+        import base64
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+        img_str = base64.b64encode(buf.read()).decode('utf-8')
         plt.close()
+        return f"data:image/png;base64,{img_str}"
         
-        return bb_chart_filename
     def calculate_trend(self, prices, short_window=7, long_window=30):
         """Ανάλυση τάσης με βάση τους κινητούς μέσους όρους."""
         if not prices or len(prices) < long_window:
@@ -442,18 +447,16 @@ class CryptoAnalyzer:
             report = f"# Αναφορά Τεχνικής Ανάλυσης για {coin_id.capitalize()}\n\n"
             report += f"## Ημερομηνία ανάλυσης: {now}\n\n"
             # Προσθήκη συνδέσμων προς τα γραφήματα
+
             report += "## Γραφήματα\n\n"
             if price_chart:
-                chart_path = os.path.abspath(os.path.join(self.charts_dir, price_chart))
-                report += f"- [**Γράφημα Τιμής**](file://{chart_path})\n"
-    
+                report += f"![Γράφημα Τιμής]({price_chart})\n\n"
+
             if bollinger_chart:
-                chart_path = os.path.abspath(os.path.join(self.charts_dir, bollinger_chart))
-                report += f"- [**Γράφημα Bollinger Bands**](file://{chart_path})\n"
-    
+                report += f"![Γράφημα Bollinger Bands]({bollinger_chart})\n\n"
+
             if indicators_chart:
-                chart_path = os.path.abspath(os.path.join(self.charts_dir, indicators_chart))
-                report += f"- [**Γράφημα RSI**](file://{chart_path})\n"
+                report += f"![Γράφημα RSI]({indicators_chart})\n\n"
     
             report += "\n"
            
